@@ -1,4 +1,4 @@
 class IDivider:
-    def Divide(signal):
+    def Divide(self, signal):
         pass
     pass
