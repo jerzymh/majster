@@ -1,4 +1,4 @@
-from DividingCompressorBase import DividingCompressorBase
+from DividingCompressor import DividingCompressorBase
 from DummyCompressor import DummmyCompressor, DummyCompressor
 from DummyDivider import DummyDivider
 from DummyEncancer import DummyEnhancer
