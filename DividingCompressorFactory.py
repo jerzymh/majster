@@ -1,15 +1,15 @@
-from DividingCompressor import DividingCompressorBase
-from DummyCompressor import DummmyCompressor, DummyCompressor
+from DividingCompressor import DividingCompressor
+from DummyCompressor import DummyCompressor
 from DummyDivider import DummyDivider
 from DummyEncancer import DummyEnhancer
 
 class DividingCompressorFactory:
     def __init__(self):
         pass
-    def generate():
+    def generate(self):
         compressors = []
         dummyDivider = DummyDivider()
         dummyCompressorsList = [DummyCompressor()]
         dummyEnhancer = DummyEnhancer()
-        compressors.append(DividingCompressorBase(dummyDivider, dummyEnhancer, dummyCompressorsList))
+        compressors.append(DividingCompressor(dummyDivider, dummyEnhancer, dummyCompressorsList))
         return compressors
