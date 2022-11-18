@@ -1,4 +1,4 @@
 class CompressionQualityMeasurerBase:
-    def measure(originalSignal, reconstruction):
+    def measure(self, originalSignal, reconstruction):
         raise NotImplementedError
     pass

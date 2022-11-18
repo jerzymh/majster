@@ -9,7 +9,7 @@ class DividingCompressorFactory:
     def generate(self):
         compressors = []
         dummyDivider = DummyDivider()
-        dummyCompressorsList = [DummyCompressor()]
+        dummyCompressorsList = [DummyCompressor(), DummyCompressor()]
         dummyEnhancer = DummyEnhancer()
         compressors.append(DividingCompressor(dummyDivider, dummyEnhancer, dummyCompressorsList))
         return compressors

@@ -1,6 +1,6 @@
 class IEnhancer:
-    def enhance(signal):
+    def enhance(self, signal):
         raise NotImplementedError 
-    def unenhance(signal):
+    def unenhance(self, signal):
         raise NotImplementedError
     pass

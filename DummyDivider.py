@@ -5,4 +5,5 @@ class DummyDivider(IDivider):
         return [signal, []]
     def merge(self, factor1, factor2):
         return factor1
-    pass
+    def merge(self, factors):
+        return factors[0]

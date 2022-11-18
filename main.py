@@ -20,8 +20,12 @@ from DividingCompressorFactory import DividingCompressorFactory
 
 factory = DividingCompressorFactory()
 dividingCompressors = factory.generate()
-decompressed = []
+decompressed = {}
 
 for compressor in dividingCompressors:
     compressed = compressor.compress('DIABOJ.WAV')
-    decompressed.append(compressor.decompress('DIABOJ.WAV'))
+    #decompressed.append(compressor.decompress(compressed))
+    decompressed["dummy"]=compressor.decompress(compressed)
+    
+
+print(decompressed)
