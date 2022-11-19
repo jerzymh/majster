@@ -25,7 +25,7 @@ decompressed = {}
 for compressor in dividingCompressors:
     compressed = compressor.compress('DIABOJ.WAV')
     #decompressed.append(compressor.decompress(compressed))
-    decompressed["dummy"]=compressor.decompress(compressed)
+    decompressed[str(compressor)]=compressor.decompress(compressed)
     
 
 print(decompressed)

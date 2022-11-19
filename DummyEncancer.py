@@ -5,3 +5,5 @@ class DummyEnhancer(IEnhancer):
         return signal
     def unenhance(self, signal):
         return signal
+    def __repr__(self):
+        return "DummyEnhancer"

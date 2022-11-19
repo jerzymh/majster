@@ -5,3 +5,5 @@ class DummyCompressor(IBandCompressor):
         return signal
     def decompress(self, signal):
         return signal
+    def __repr__(self):
+        return "DummyCompressor"

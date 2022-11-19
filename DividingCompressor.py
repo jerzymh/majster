@@ -28,4 +28,7 @@ class DividingCompressor(IBandCompressor):
         unenhanced = self.enhancer.unenhance(merged)
         return unenhanced
 
+    def __repr__(self):
+        name = "DividingCompressor:(divider:%s)(enhancer:%s)(bandCompressors:%s)"%(self.divider, self.enhancer, self.compressors)
+        return name
         

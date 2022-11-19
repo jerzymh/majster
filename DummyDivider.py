@@ -7,3 +7,5 @@ class DummyDivider(IDivider):
         return factor1
     def merge(self, factors):
         return factors[0]
+    def __repr__(self):
+        return "DummyDivider"

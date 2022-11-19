@@ -3,4 +3,6 @@ class IEnhancer:
         raise NotImplementedError 
     def unenhance(self, signal):
         raise NotImplementedError
+    def __repr__(self):
+        raise NotImplementedError
     pass
