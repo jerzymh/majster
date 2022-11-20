@@ -1,5 +1,5 @@
 from logging import exception
-import IBandCompressor as I
+import BandCompressorBase as I
 import matlab.engine
 
 class G7231BasicCompressor(I.IPartCompressor):

@@ -1,4 +1,4 @@
-class IDivider:
+class DividerBase:
     def divide(self, signal):
         raise NotImplementedError
     def merge(self, factor1, factor2):

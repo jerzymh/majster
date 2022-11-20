@@ -1,4 +1,4 @@
-class IEnhancer:
+class EnhancerBase:
     def enhance(self, signal):
         raise NotImplementedError 
     def unenhance(self, signal):

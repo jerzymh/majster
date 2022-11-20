@@ -17,15 +17,25 @@ import matlab.engine
 # mlEng.audiowrite("output.wav", matlab.double(u), fs, nargout=0)
 
 from DividingCompressorFactory import DividingCompressorFactory
+from DummyCompressionQualityMeasurer import DummyCompressionQualityMeasurer
 
 factory = DividingCompressorFactory()
 dividingCompressors = factory.generate()
-decompressed = {}
+audioFileToTest = 'DIABOJ.WAV'
+measurers = [DummyCompressionQualityMeasurer()]
+
+print("Testing for audio file: '%s'"%audioFileToTest)
+
+decompressedByCompressorName = {}
 
 for compressor in dividingCompressors:
-    compressed = compressor.compress('DIABOJ.WAV')
-    #decompressed.append(compressor.decompress(compressed))
-    decompressed[str(compressor)]=compressor.decompress(compressed)
+    compressed = compressor.compress(audioFileToTest)
+    decompressedByCompressorName[str(compressor)]=compressor.decompress(compressed)
+    
+measures = {}
+for compressorName in decompressedByCompressorName:
+    for m in measurers:
+        measures[(compressorName, m)] = m.measure(audioFileToTest, decompressedByCompressorName[compressorName])
     
 
-print(decompressed)
+print(measures)

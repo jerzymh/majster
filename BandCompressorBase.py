@@ -1,4 +1,4 @@
-class IBandCompressor:
+class BandCompressorBase:
     def compress(self, signal):
         raise NotImplementedError
     def decompress(self, signal):

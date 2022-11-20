@@ -1,6 +1,6 @@
-from IBandCompressor import IBandCompressor
+from BandCompressorBase import BandCompressorBase
 
-class DividingCompressor(IBandCompressor):
+class DividingCompressor(BandCompressorBase):
     def __init__(self, divider, enhancer, compressors) -> None:
         self.divider = divider
         self.enhancer = enhancer

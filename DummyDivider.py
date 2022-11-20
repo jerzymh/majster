@@ -1,6 +1,6 @@
-from IDivider import IDivider
+from DividerBase import DividerBase
 
-class DummyDivider(IDivider):
+class DummyDivider(DividerBase):
     def divide(self, signal):
         return [signal, []]
     def merge(self, factor1, factor2):

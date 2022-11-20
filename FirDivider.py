@@ -1,7 +1,7 @@
-from IDivider import IDivider
+from DividerBase import DividerBase
 import matlab.engine
 
-class FirDivider(IDivider.IDivider):
+class FirDivider(DividerBase.DividerBase):
     def __init__(self, filterCoeffsCount):
         self.filterCoeffsCount = filterCoeffsCount
         self.eng = matlab.engine.start_matlab()

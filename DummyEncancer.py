@@ -1,6 +1,6 @@
-from IEnhancer import IEnhancer
+from EnhancerBase import EnhancerBase
 
-class DummyEnhancer(IEnhancer):
+class DummyEnhancer(EnhancerBase):
     def enhance(self, signal):
         return signal
     def unenhance(self, signal):
