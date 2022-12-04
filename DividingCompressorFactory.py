@@ -3,13 +3,20 @@ from DummyCompressor import DummyCompressor
 from DummyDivider import DummyDivider
 from DummyEncancer import DummyEnhancer
 
+from QMFDivider import QMFDivider
+
+import matlab.engine
+
 class DividingCompressorFactory:
     def __init__(self):
         pass
     def generate(self):
-        compressors = []
-        dummyDivider = DummyDivider()
+        mlEngine = matlab.engine.start_matlab()
+        generatedCompressors = []
+        # dummyDivider = DummyDivider()
+        divider = QMFDivider(mlEngine)
+
         dummyCompressorsList = [DummyCompressor(), DummyCompressor()]
         dummyEnhancer = DummyEnhancer()
-        compressors.append(DividingCompressor(dummyDivider, dummyEnhancer, dummyCompressorsList))
-        return compressors
+        generatedCompressors.append(DividingCompressor(divider, dummyEnhancer, dummyCompressorsList))
+        return generatedCompressors

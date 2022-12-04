@@ -1,6 +1,4 @@
 from bz2 import compress
-import numpy as np
-import matlab.engine
 # from G7231BasicCompressor import G7231BasicCompressor
 
 # mlEng = matlab.engine.start_matlab()

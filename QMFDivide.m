@@ -1,4 +1,4 @@
-function [factor1, factor2] = QMFDivide(fileName)
+function [] = QMFDivide(inputFileName, lowbandFileName, highbandFileName)
     % % Podzial sygnalu na dolno i gornopasmowy - filtry QMF
 %close all;
 %clear;
@@ -8,7 +8,7 @@ dv=0.00003; % dla mniejszych wartosci nie dziala prawidllowo
  N=floor(N/2)*2;
 
 [q,err]=firpm(N,fpts,mag,wt);
-N;
+% N;
 
 
 q(1+floor(N/2))=q(1+floor(N/2))+err;
@@ -23,10 +23,10 @@ g0=g0*sqrt(2);
 h1=h1*sqrt(2);
 g1=g1*sqrt(2);
 
-[H0,w0] = freqz(h0,1,256);
-[H1,w1] = freqz(h1,1,256);
-[G0,w2] = freqz(g0,1,256);
-[G1,w3] = freqz(g1,1,256);
+% [H0,w0] = freqz(h0,1,256);
+% [H1,w1] = freqz(h1,1,256);
+% [G0,w2] = freqz(g0,1,256);
+% [G1,w3] = freqz(g1,1,256);
 
 % mamy 2 filtry analizy i 2 filtry syntezy
 
@@ -45,16 +45,15 @@ g1=g1*sqrt(2);
 %  nom_fichier = [fichier '.wav'];
 %   x = wavread(nom_fichier);
 
-x = wavread(fileName)
-  m=length(x) 
-  fe=16000;
+[x, fe] = wavread(inputFileName);
+  m=length(x) ;
   
 
 v0=conv(h0,x);    % filtracja przez splot
 u0=downsample(v0,2);  % sygnal dolnopasmnowy - do kwantyzacji
-len_low=length(u0)
- nom1 = [fileName 'QmfDevLow.wav'];  % nazwa
- wavwrite(u0,fe/2,nom1);   % zapisujemy sygnal dolnopasmowy jako sygnal 8000 pr/s
+%len_low=length(u0)
+
+ wavwrite(u0,fe/2, lowbandFileName);   % zapisujemy sygnal dolnopasmowy jako sygnal 8000 pr/s
 % tu mozna wstawic koder sygnalu dolnopasmowego
 % G7231Coder_basic(nom1,'d.dat');
 % G7231Decoder_3('d.dat','lowd.wav');
@@ -66,10 +65,8 @@ len_low=length(u0)
 v1=conv(h1,x);
 u1=downsample(v1,2); % sygnal gornopasmowy - do kwantyzacji
 % len_high=length(u1)
- nom2 = [fileName 'QmfDevHigh.wav'];  % nazwa
- wavwrite(u1,fe/2,nom2);   % zapisujemy sygnal gornopasmowy jako sygnal 8000 pr/s
+
+ wavwrite(u1,fe/2, highbandFileName);   % zapisujemy sygnal gornopasmowy jako sygnal 8000 pr/s
 % tu mozna wstawic koder sygnalu gornopasmowego
-factor1, factor2 = nom1, nom2;
-factor2 = nom2;
 
 end
