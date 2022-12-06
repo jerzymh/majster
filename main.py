@@ -19,7 +19,7 @@ from DummyCompressionQualityMeasurer import DummyCompressionQualityMeasurer
 
 factory = DividingCompressorFactory()
 dividingCompressors = factory.generate()
-audioFileToTest = 'DIABOJ.WAV'
+audioFileToTest = 'parole16.WAV'
 measurers = [DummyCompressionQualityMeasurer()]
 
 print("Testing for audio file: '%s'"%audioFileToTest)
