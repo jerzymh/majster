@@ -1,7 +1,7 @@
 from DividingCompressor import DividingCompressor
 from DummyCompressor import DummyCompressor
 from DummyDivider import DummyDivider
-from DummyEncancer import DummyEnhancer
+from HighbandBooster import HighbandBooster
 from G7231BasicCompressor import G7231BasicCompressor
 
 from QMFDivider import QMFDivider
@@ -24,6 +24,6 @@ class DividingCompressorFactory:
         g7231basicCompressor2.outputFileName = 'G7231_2_output.wav'
         g7231basicCompressor2.reconstuctionFileName = 'G7231_2_reconst.wav'
         bandCompressorsList = [g7231basicCompressor1, g7231basicCompressor2]
-        dummyEnhancer = DummyEnhancer()
-        generatedCompressors.append(DividingCompressor(divider, dummyEnhancer, bandCompressorsList))
+        highbandBooster = HighbandBooster(mlEngine, 10)
+        generatedCompressors.append(DividingCompressor(divider, highbandBooster, bandCompressorsList))
         return generatedCompressors
