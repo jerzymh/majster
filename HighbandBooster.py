@@ -8,7 +8,7 @@ class HighbandBooster(EnhancerBase):
             raise Exception("Engine is not matlab engine, but it should be!")
         self.engine = engine
 
-        self.leveldB = leveldB
+        self.leveldB = float(leveldB)
         super().__init__()
 
     def enhance(self, signalFileName):
@@ -23,4 +23,4 @@ class HighbandBooster(EnhancerBase):
         return outputFileName
 
     def __repr__(self):
-        return "HighbandBooster" + str(self.level) + "dB"
+        return "HighbandBooster" + str(self.leveldB) + "dB"
