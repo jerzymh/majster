@@ -1,6 +1,7 @@
 from logging import exception
 from EnhancerBase import EnhancerBase
 import matlab.engine
+#audio toolbox required
 
 class HighbandBooster(EnhancerBase):
     def __init__(self, engine, leveldB) -> None:

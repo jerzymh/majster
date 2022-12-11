@@ -1,12 +1,10 @@
-import subprocess
+from PEAQCompressionQualityMeasurer import PEAQCompressionQualityMeasurer
 
-out = subprocess.Popen(['pesq', '+16000', '+wb', 'parole16.wav', 'merged.wav_-10.0dB.wav'], 
-    stdout = subprocess.PIPE, 
-    stderr = subprocess.STDOUT)
+import matlab.engine
 
-print(out)
+mlEngine = matlab.engine.start_matlab()
+measurer = PEAQCompressionQualityMeasurer(mlEngine)
 
-stdout, stderr = out.communicate()
-outStr = str(stdout)
-measureResultStr = outStr.split(' ')[-1].replace("\\n","").replace("\\r","").replace("\"","")
-print(measureResultStr)
+result = measurer.measure('parole16.wav', 'merged.wav_-10.0dB.wav')
+
+print(str(result))

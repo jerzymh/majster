@@ -4,7 +4,7 @@ import subprocess
 
 class PESQCompressionQualityMeasurer(CompressionQualityMeasurerBase):
     def measure(self, originalSignalFileName, reconstructionFileName):
-        out = subprocess.Popen(['pesq', '+16000', '+wb', originalSignalFileName, reconstructionFileName], 
+        out = subprocess.Popen(['pesq/pesq', '+16000', '+wb', originalSignalFileName, reconstructionFileName], 
         stdout = subprocess.PIPE, 
         stderr = subprocess.STDOUT)
         stdout, stderr = out.communicate()
