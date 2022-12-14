@@ -1,41 +1,37 @@
-from bz2 import compress
-import numpy as np
-import matlab.engine
-# from G7231BasicCompressor import G7231BasicCompressor
-
-# mlEng = matlab.engine.start_matlab()
-# [u, fs] = mlEng.audioread("diaboj.wav", nargout=2)
-# u = np.array(u)
-# u = u[:, 0]
-# print(u[0])
-
-# compressor = G7231BasicCompressor(mlEng, fs)
-# compressed = compressor.compress(u)
-# [reconstruction, fs] = compressor.decompress(compressed)
-
-
-# mlEng.audiowrite("output.wav", matlab.double(u), fs, nargout=0)
-
 from DividingCompressorFactory import DividingCompressorFactory
-from DummyCompressionQualityMeasurer import DummyCompressionQualityMeasurer
+from CompressionQualityMeasurerComposite import CompressionQualityMeasurerComposite
+from PEAQCompressionQualityMeasurer import PEAQCompressionQualityMeasurer
+from PESQCompressionQualityMeasurer import PESQCompressionQualityMeasurer
 
 factory = DividingCompressorFactory()
 dividingCompressors = factory.generate()
-audioFileToTest = 'DIABOJ.WAV'
-measurers = [DummyCompressionQualityMeasurer()]
+audioFilesToTest = ['parole16.WAV', 'probka_audiobook.wav', 'probka_rap.wav', 'probka_sciezka_z_filmu.wav']
+measurer = CompressionQualityMeasurerComposite()
+measurer.register(PEAQCompressionQualityMeasurer(factory.mlEngine))
+measurer.register(PESQCompressionQualityMeasurer())
 
-print("Testing for audio file: '%s'"%audioFileToTest)
+def TestCompressorsForAudioFile(audioFileToTest):
+    print("Testing for audio file: '%s'"%audioFileToTest)
 
-decompressedByCompressorName = {}
+    decompressedByCompressorName = {}
 
-for compressor in dividingCompressors:
-    compressed = compressor.compress(audioFileToTest)
-    decompressedByCompressorName[str(compressor)]=compressor.decompress(compressed)
-    
-measures = {}
-for compressorName in decompressedByCompressorName:
-    for m in measurers:
-        measures[(compressorName, m)] = m.measure(audioFileToTest, decompressedByCompressorName[compressorName])
-    
+    for compressor in dividingCompressors:
+        compressed = compressor.compress(audioFileToTest)
+        decompressedByCompressorName[str(compressor)]=compressor.decompress(compressed)
+       
+    measures = {}
+    for compressorName in decompressedByCompressorName:
+        measures[(compressorName, measurer)] = measurer.measure(audioFileToTest, decompressedByCompressorName[compressorName])
 
-print(measures)
+    print(measures)
+    return measures
+
+
+results = []
+
+for audioFileToTest in audioFilesToTest:
+    results.append(TestCompressorsForAudioFile(audioFileToTest))
+
+print('Results:\n', results)
+
+
