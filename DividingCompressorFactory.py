@@ -76,14 +76,8 @@ class DividingCompressorFactory:
     def __init__(self):
         self.mlEngine = matlab.engine.start_matlab()
         pass
-    def generate(self):
-        generatedCompressors = []
 
-        dividers = [QMFDivider(self.mlEngine), QMFWithHighbandModDivider(self.mlEngine)]
-        enhancers = [DummyEnhancer(), HighbandBooster()]
-        highBandCompressors = [DummyCompressor()]
-        lowBandCompressors = [DummyCompressor()]
-        
+    def getG723Pairs(self):
         G7231Compressors = []
         G7231Compressor1 = G7231Compressor(self.mlEngine)
         G7231Compressors.append(G7231Compressor1)
@@ -105,15 +99,37 @@ class DividingCompressorFactory:
         G7231Compressor1.impulseNumber = 64
         G7231Compressors.append(G7231Compressor1)
 
+        G7231CompressorsWithExc = []
         for c in G7231Compressors:
             copy = c.getCopy()
             copy.isUsingSeparateExcitation = True
-            .......................
+            G7231CompressorsWithExc.append(copy)
 
-        # dummyDivider = DummyDivider()
-        # divider = QMFWithHighbandModDivider(self.mlEngine)
+        G7231Compressors += G7231CompressorsWithExc
 
-        bandCompressorsList = [G7231Compressor1, G7231Compressor2]
-        highbandBooster = HighbandBooster(self.mlEngine, 10)
-        generatedCompressors.append(DividingCompressor(divider, highbandBooster, bandCompressorsList))
+        result = []
+        for c1 in G7231Compressors:
+            c1.outputFileName = "lowbandComp.dat"
+            c1.reconstuctionFileName = "lowbandRec.wav"
+            c2 = c1.getCopy()
+            c2.outputFileName = "highbandComp.dat"
+            c2.reconstuctionFileName = "highbandRec.wav"
+            result.append([c1, c2])
+
+
+    def getCompressors(self):
+        generatedCompressors = []
+        dividers = [QMFDivider(self.mlEngine), QMFWithHighbandModDivider(self.mlEngine)]
+        enhancers = [DummyEnhancer(), HighbandBooster(self.mlEngine, 10), HighbandBooster(self.mlEngine, 20), HighbandBooster(self.mlEngine, 30)]
+        compressorPairs= [[DummyCompressor(), DummyCompressor()]] + self.getG723Pairs()
+
+        combiner = AssemblyCombiner()
+        combiner.connectPositions(enhancers)
+        combiner.connectPositions(dividers)
+        combiner.connectPositions(compressorPairs)
+
+        while combiner.hasNextCombination():
+            combination = combiner.getNextCombination()
+            generatedCompressors.append(combination[0], combination[1], combination[2])
+
         return generatedCompressors
