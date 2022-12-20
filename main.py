@@ -4,7 +4,7 @@ from PEAQCompressionQualityMeasurer import PEAQCompressionQualityMeasurer
 from PESQCompressionQualityMeasurer import PESQCompressionQualityMeasurer
 
 factory = DividingCompressorFactory()
-dividingCompressors = factory.generate()
+dividingCompressors = factory.getCompressors()
 audioFilesToTest = ['parole16.WAV', 'probka_audiobook.wav', 'probka_rap.wav', 'probka_sciezka_z_filmu.wav']
 measurer = CompressionQualityMeasurerComposite()
 measurer.register(PEAQCompressionQualityMeasurer(factory.mlEngine))

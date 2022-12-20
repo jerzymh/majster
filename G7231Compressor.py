@@ -41,7 +41,7 @@ class G7231Compressor(BandCompressorBase):
     def __repr__(self):
         return "G7231Compressor"
 
-    def getCopy(self) -> G7231Compressor:
+    def getCopy(self):
         copy = G7231Compressor(self.engine)
         copy.impulseNumber = self.impulseNumber
         copy.isUsingCustomImpulseNumber = self.isUsingCustomImpulseNumber

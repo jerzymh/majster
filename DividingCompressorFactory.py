@@ -116,6 +116,8 @@ class DividingCompressorFactory:
             c2.reconstuctionFileName = "highbandRec.wav"
             result.append([c1, c2])
 
+        return result
+
 
     def getCompressors(self):
         generatedCompressors = []
@@ -123,7 +125,7 @@ class DividingCompressorFactory:
         enhancers = [DummyEnhancer(), HighbandBooster(self.mlEngine, 10), HighbandBooster(self.mlEngine, 20), HighbandBooster(self.mlEngine, 30)]
         compressorPairs= [[DummyCompressor(), DummyCompressor()]] + self.getG723Pairs()
 
-        combiner = AssemblyCombiner()
+        combiner = AssemblyCombiner()#############################################################
         combiner.connectPositions(enhancers)
         combiner.connectPositions(dividers)
         combiner.connectPositions(compressorPairs)
