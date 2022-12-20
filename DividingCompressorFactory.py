@@ -14,7 +14,7 @@ class AssemblyPosition:
         self.name = name
         self.nextPosition = None
         self.possibleAssembliesList = possibleAssembliesList
-        self.currentIndex = -1
+        self.currentIndex = 0
         pass
     def connectNextPosition(self, position):
         if self.nextPosition == None:
@@ -31,16 +31,12 @@ class AssemblyPosition:
         else:
             raise IndexError()
 
-    def getNextPositions(self):
-        self.moveToNext()
-        self.getCurrentPositions()
-        None
     
     def getCurrentPositions(self):
         if self.nextPosition == None:
             return [self.possibleAssembliesList[self.currentIndex]]
         else:
-            return self.nextPosition.getCurrentPositions.append(self.possibleAssembliesList[self.currentIndex])
+            return self.nextPosition.getCurrentPositions() + [self.possibleAssembliesList[self.currentIndex]]
 
     def hasNextPosition(self):
         if self.currentIndex + 1 < len(self.possibleAssembliesList):
@@ -53,7 +49,7 @@ class AssemblyPosition:
 
 class AssemblyCombiner:
     def __init__(self, possibleAssembliesListsByName) -> None:
-        self.possibleAssembliesListsByName
+        self.possibleAssembliesListsByName = possibleAssembliesListsByName
         self.connectPositions()
         pass
 
@@ -66,9 +62,6 @@ class AssemblyCombiner:
             else:
                 self.firstAssembly.connectNextPosition(newAssemblyPosition)
 
-    def getNextCombination(self):
-        return self.firstAssembly.getNextPositions()
-
     def hasNextCombination(self):
         return self.firstAssembly.hasNextPosition()
 
@@ -77,7 +70,7 @@ class DividingCompressorFactory:
         self.mlEngine = matlab.engine.start_matlab()
         pass
 
-    def getG723Pairs(self):
+    def getG7231ListsPair(self):
         G7231Compressors = []
         G7231Compressor1 = G7231Compressor(self.mlEngine)
         G7231Compressors.append(G7231Compressor1)
@@ -107,14 +100,15 @@ class DividingCompressorFactory:
 
         G7231Compressors += G7231CompressorsWithExc
 
-        result = []
-        for c1 in G7231Compressors:
-            c1.outputFileName = "lowbandComp.dat"
-            c1.reconstuctionFileName = "lowbandRec.wav"
-            c2 = c1.getCopy()
-            c2.outputFileName = "highbandComp.dat"
-            c2.reconstuctionFileName = "highbandRec.wav"
-            result.append([c1, c2])
+        result = [[],[]]
+        for c0 in G7231Compressors:
+            c0.outputFileName = "lowbandComp.dat"
+            c0.reconstuctionFileName = "lowbandRec.wav"
+            c1 = c0.getCopy()
+            c1.outputFileName = "highbandComp.dat"
+            c1.reconstuctionFileName = "highbandRec.wav"
+            result[0].append(c0)
+            result[1].append(c1)
 
         return result
 
@@ -123,15 +117,26 @@ class DividingCompressorFactory:
         generatedCompressors = []
         dividers = [QMFDivider(self.mlEngine), QMFWithHighbandModDivider(self.mlEngine)]
         enhancers = [DummyEnhancer(), HighbandBooster(self.mlEngine, 10), HighbandBooster(self.mlEngine, 20), HighbandBooster(self.mlEngine, 30)]
-        compressorPairs= [[DummyCompressor(), DummyCompressor()]] + self.getG723Pairs()
+        compressorListsPair = self.getG7231ListsPair()
+        compressorListsPair[0].append(DummyCompressor())
+        compressorListsPair[1].append(DummyCompressor())
 
-        combiner = AssemblyCombiner()#############################################################
-        combiner.connectPositions(enhancers)
-        combiner.connectPositions(dividers)
-        combiner.connectPositions(compressorPairs)
 
+        combiner = AssemblyCombiner(
+            {
+                "highBandCompressor" : compressorListsPair[1],
+                "lowBandCompressor" : compressorListsPair[0],
+                "enhancer" : enhancers,
+                "divider" : dividers
+            }
+        )
+
+        
+        combination = combiner.firstAssembly.getCurrentPositions()
+        generatedCompressors.append(DividingCompressor(combination[0], combination[1], [combination[2], combination[3]]))
         while combiner.hasNextCombination():
-            combination = combiner.getNextCombination()
-            generatedCompressors.append(combination[0], combination[1], combination[2])
+            combiner.firstAssembly.moveToNext()
+            combination = combiner.firstAssembly.getCurrentPositions()
+            generatedCompressors.append(DividingCompressor(combination[0], combination[1], [combination[2], combination[3]]))
 
         return generatedCompressors
