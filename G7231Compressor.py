@@ -39,7 +39,10 @@ class G7231Compressor(BandCompressorBase):
         return self.reconstuctionFileName
 
     def __repr__(self):
-        return "G7231Compressor"
+        result = "G7231Compressor%dImps"%self.impulseNumber
+        if self.isUsingSeparateExcitation:
+            result += "SepExc"
+        return result
 
     def getCopy(self):
         copy = G7231Compressor(self.engine)

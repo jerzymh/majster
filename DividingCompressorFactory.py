@@ -42,7 +42,7 @@ class AssemblyPosition:
         if self.currentIndex + 1 < len(self.possibleAssembliesList):
             return True
         elif self.nextPosition != None:
-            return self.nextPosition.hasNextPosition
+            return self.nextPosition.hasNextPosition()
         else:
             return False
             
