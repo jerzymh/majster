@@ -88,10 +88,6 @@ class DividingCompressorFactory:
         G7231Compressor1.impulseNumber = 32
         G7231Compressors.append(G7231Compressor1)
 
-        G7231Compressor1 = G7231Compressor1.getCopy()
-        G7231Compressor1.impulseNumber = 64
-        G7231Compressors.append(G7231Compressor1)
-
         G7231CompressorsWithExc = []
         for c in G7231Compressors:
             copy = c.getCopy()

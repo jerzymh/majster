@@ -10,28 +10,31 @@ measurer = CompressionQualityMeasurerComposite()
 measurer.register(PEAQCompressionQualityMeasurer(factory.mlEngine))
 measurer.register(PESQCompressionQualityMeasurer())
 
-def TestCompressorsForAudioFile(audioFileToTest):
+def TestCompressorsForAudioFile(audioFileToTest, resultsTextFile):
     print("Testing for audio file: '%s'"%audioFileToTest)
+    measures = {}
+    with open(resultsTextFile, 'a') as resultsFile:
+        resultsFile.write(audioFileToTest + '\n')
 
-    decompressedByCompressorName = {}
 
     for compressor in dividingCompressors:
-        compressed = compressor.compress(audioFileToTest)
-        decompressedByCompressorName[str(compressor)]=compressor.decompress(compressed)
-       
-    measures = {}
-    for compressorName in decompressedByCompressorName:
-        measures[(compressorName, measurer)] = measurer.measure(audioFileToTest, decompressedByCompressorName[compressorName])
+        try:
+            compressed = compressor.compress(audioFileToTest)
+            decompressed=compressor.decompress(compressed)
+            measure = measurer.measure(audioFileToTest, decompressed)  
+        except Exception:
+            measure = 'error'
+        measures[str(compressor)] = measure
+        with open(resultsTextFile, 'a') as resultsFile:
+            resultsFile.write(str(compressor)+str(measure)+'\n')
 
     print(measures)
     return measures
 
-
 results = []
 
 for audioFileToTest in audioFilesToTest:
-    results.append(TestCompressorsForAudioFile(audioFileToTest))
+    TestCompressorsForAudioFile(audioFileToTest, 'results.txt')
 
-print('Results:\n', results)
 
 

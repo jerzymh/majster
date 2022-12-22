@@ -61,8 +61,8 @@ y1=conv(d1,g1);
 % plot(u0,'b'),title('sygnal dolnopasmowy u0');
 % subplot(212)
 % plot(u1,'g'),title('sygnal gornopasmowy u1');
-
-y=y0+y1;   %  sygnal wyjsciowy
+len=min([length(y0), length(y1)])
+y=y0(1:len)+y1(1:len);   %  sygnal wyjsciowy
 
 
 % M=512;
