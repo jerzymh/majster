@@ -1,8 +1,8 @@
 from logging import exception
-from BandCompressorBase import BandCompressorBase
+from CompressorBase import CompressorBase
 import matlab.engine
 
-class G7231Compressor(BandCompressorBase):
+class G7231Compressor(CompressorBase):
     def __init__(self, engine) -> None:
         if not isinstance(engine, matlab.engine.matlabengine.MatlabEngine):
             raise Exception("Engine is not matlab engine, but it should be!")

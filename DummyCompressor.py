@@ -1,6 +1,6 @@
-from BandCompressorBase import BandCompressorBase
+from CompressorBase import CompressorBase
 
-class DummyCompressor(BandCompressorBase):
+class DummyCompressor(CompressorBase):
     def compress(self, signal):
         return signal
     def decompress(self, signal):
