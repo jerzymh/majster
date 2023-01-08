@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="lTeTE6zmHuBSWw06rpnl" name="Strona-1">
-        <mxGraphModel dx="870" dy="504" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1228" dy="712" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -73,7 +73,7 @@
                         <mxPoint x="780" y="150" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="13" value="y2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontFamily=Georgia;" vertex="1" connectable="0" parent="7">
+                <mxCell id="13" value="v2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontFamily=Georgia;" vertex="1" connectable="0" parent="7">
                     <mxGeometry x="0.3325" relative="1" as="geometry">
                         <mxPoint y="-10" as="offset"/>
                     </mxGeometry>
@@ -84,7 +84,7 @@
                         <mxPoint x="780" y="280" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="14" value="y1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontFamily=Georgia;" vertex="1" connectable="0" parent="8">
+                <mxCell id="14" value="v1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontFamily=Georgia;" vertex="1" connectable="0" parent="8">
                     <mxGeometry x="0.3636" relative="1" as="geometry">
                         <mxPoint y="-10" as="offset"/>
                     </mxGeometry>
@@ -95,8 +95,8 @@
                 <mxCell id="36" value="" style="edgeStyle=none;html=1;fontFamily=Georgia;fontSize=12;endArrow=blockThin;endFill=1;rounded=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="15" source="16" target="18">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
-                            <mxPoint x="207" y="104"/>
-                            <mxPoint x="207" y="155"/>
+                            <mxPoint x="197" y="104"/>
+                            <mxPoint x="197" y="155"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
@@ -105,14 +105,14 @@
                         <mxPoint x="10" y="-1" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="16" value="highbandCompressor&lt;br style=&quot;font-size: 12px;&quot;&gt;.decompress(d2)" style="whiteSpace=wrap;html=1;fontFamily=Georgia;fontSize=12;" vertex="1" parent="15">
+                <mxCell id="16" value="highbandCompressor&lt;br style=&quot;font-size: 12px&quot;&gt;.decompress(y2)" style="whiteSpace=wrap;html=1;fontFamily=Georgia;fontSize=12;" vertex="1" parent="15">
                     <mxGeometry x="37" y="75" width="150" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="37" value="" style="edgeStyle=none;html=1;fontFamily=Georgia;fontSize=12;endArrow=blockThin;endFill=1;rounded=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="15" source="17" target="18">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
-                            <mxPoint x="207" y="230"/>
-                            <mxPoint x="207" y="185"/>
+                            <mxPoint x="197" y="230"/>
+                            <mxPoint x="197" y="185"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
@@ -121,7 +121,7 @@
                         <mxPoint x="9" y="4" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="17" value="lowbandCompressor&lt;br style=&quot;font-size: 12px;&quot;&gt;.decompress(d1)" style="whiteSpace=wrap;html=1;fontFamily=Georgia;fontSize=12;" vertex="1" parent="15">
+                <mxCell id="17" value="lowbandCompressor&lt;br style=&quot;font-size: 12px&quot;&gt;.decompress(y1)" style="whiteSpace=wrap;html=1;fontFamily=Georgia;fontSize=12;" vertex="1" parent="15">
                     <mxGeometry x="37" y="200" width="150" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="38" value="" style="edgeStyle=none;html=1;fontFamily=Georgia;fontSize=12;endArrow=blockThin;endFill=1;" edge="1" parent="15" source="18" target="25">
@@ -132,11 +132,11 @@
                         <mxPoint x="1" y="-10" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="18" value="divider.merge(e)" style="whiteSpace=wrap;html=1;fontFamily=Georgia;fontSize=12;" vertex="1" parent="15">
-                    <mxGeometry x="257" y="140" width="120" height="60" as="geometry"/>
+                <mxCell id="18" value="divider.merge(d1', d2')" style="whiteSpace=wrap;html=1;fontFamily=Georgia;fontSize=12;" vertex="1" parent="15">
+                    <mxGeometry x="220" y="140" width="147" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="25" value="enhancer.unenhance(x)" style="whiteSpace=wrap;html=1;fontFamily=Georgia;fontSize=12;" vertex="1" parent="15">
-                    <mxGeometry x="407" y="140" width="131" height="60" as="geometry"/>
+                    <mxGeometry x="397" y="140" width="143" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="26" value="DividingCompressor.decompress(y1, y2)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Georgia;fontSize=12;" vertex="1" parent="15">
                     <mxGeometry x="11" y="30" width="230" height="20" as="geometry"/>
@@ -147,7 +147,7 @@
                         <mxPoint x="80" y="530" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="41" value="y2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontFamily=Georgia;" vertex="1" connectable="0" parent="34">
+                <mxCell id="41" value="v2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontFamily=Georgia;" vertex="1" connectable="0" parent="34">
                     <mxGeometry x="-0.2692" y="-1" relative="1" as="geometry">
                         <mxPoint x="3" y="-15" as="offset"/>
                     </mxGeometry>
@@ -158,7 +158,7 @@
                         <mxPoint x="100" y="640" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="42" value="y1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontFamily=Georgia;" vertex="1" connectable="0" parent="35">
+                <mxCell id="42" value="v1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontFamily=Georgia;" vertex="1" connectable="0" parent="35">
                     <mxGeometry x="-0.2538" y="-1" relative="1" as="geometry">
                         <mxPoint x="1" y="-11" as="offset"/>
                     </mxGeometry>
