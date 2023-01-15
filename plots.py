@@ -36,57 +36,161 @@ class ResultsPlot:
 
 results = pd.read_csv('results.csv', encoding='cp1250', delimiter=';')
 results = results.assign(PEAQMOS=results["PEAQ"] + 5)
+highbandEnhanceByEnhancerName = {
+    'DummyEnhancer' : 0,
+    'HighbandBooster10.0dB' : 10,
+    'HighbandBooster20.0dB' : 20,
+    'HighbandBooster30.0dB' : 30
+}
+results['highbandEnhance'] = results['enhancer'].map(highbandEnhanceByEnhancerName)
+
+fileNames = results['filename'].unique()
+
+#################################################################################################################################################
+#wykres zależności MOS od liczby impulsów w kompresji dolnoprzepustowej z oddzielnym wzbudzeniem i bez
+
+for fileName in fileNames:
+    dataFrame = results[  (results["filename"] == fileName) 
+                        & (results["divider"] == "QMFDivider") 
+                        & (results["enhancer"] == "DummyEnhancer")
+                        & (results["lowbandCompressor"] == "G7231Compressor")
+                        & (results["highbandCompressor"] == "G7231Compressor")
+                        & (results["highbandImpulseNumber"] == 4)
+                        & (results["lowbandSeparateExcitation"].isnull())
+                        & (results["highbandSeparateExcitation"].isnull())]
+
+    plotsData = [ 
+        ResultsPlotData
+            (dataFrame, 'lowbandImpulseNumber', ['PESQ', 'PEAQMOS'], 
+            {'PESQ' : 'PESQ (wspólne wzbudzenie)', 'PEAQMOS' : 'PEAQ (wspólne wzbudzenie)'}) 
+    ]
+
+    dataFrame = results[  (results["filename"] == fileName) 
+                        & (results["divider"] == "QMFDivider") 
+                        & (results["enhancer"] == "DummyEnhancer")
+                        & (results["lowbandCompressor"] == "G7231Compressor")
+                        & (results["highbandCompressor"] == "G7231Compressor")
+                        & (results["highbandImpulseNumber"] == 4)
+                        & (results["lowbandSeparateExcitation"].notnull())
+                        & (results["highbandSeparateExcitation"].notnull())]
+                        
+    plotsData.append( 
+        ResultsPlotData(
+            dataFrame, 'lowbandImpulseNumber', ['PESQ', 'PEAQMOS'], 
+            {'PESQ' : 'PESQ (oddzielne wzbudzenie)', 'PEAQMOS' : 'PEAQ (oddzielne wzbudzenie)'}
+        ) 
+    )
+
+    plot = ResultsPlot(plotsData, 'Zależności aproksymacji MOS od liczby impulsów w dolnym paśmie\n' 
+                                    'G723.1H_Imp=4, plik ' + fileName, 
+                                    'figures/' + fileName + 'odDolnegoPasmaWzb.svg', 'Liczba impulsów', 'Aproksymacja MOS')
+    plot.draw()
+
+#################################################################################################################################################
+#wykres zależności MOS od liczby impulsów w kompresji górnoprzepustowej z oddzielnym wzbudzeniem i bez
+
+for fileName in fileNames:
+    dataFrame = results[  (results["filename"] == fileName) 
+                        & (results["divider"] == "QMFDivider") 
+                        & (results["enhancer"] == "DummyEnhancer")
+                        & (results["lowbandCompressor"] == "G7231Compressor")
+                        & (results["highbandCompressor"] == "G7231Compressor")
+                        & (results["lowbandImpulseNumber"] == 16)
+                        & (results["lowbandSeparateExcitation"].isnull())
+                        & (results["highbandSeparateExcitation"].isnull())]
+
+    plotsData = [ 
+        ResultsPlotData(
+            dataFrame, 'highbandImpulseNumber', ['PESQ', 'PEAQMOS'], 
+            {'PESQ' : 'PESQ (wspólne wzbudzenie)', 'PEAQMOS' : 'PEAQ (wspólne wzbudzenie)'}
+        ) 
+    ]
+
+    dataFrame = results[  (results["filename"] == fileName) 
+                        & (results["divider"] == "QMFDivider") 
+                        & (results["enhancer"] == "DummyEnhancer")
+                        & (results["lowbandCompressor"] == "G7231Compressor")
+                        & (results["highbandCompressor"] == "G7231Compressor")
+                        & (results["lowbandImpulseNumber"] == 16)
+                        & (results["lowbandSeparateExcitation"].notnull())
+                        & (results["highbandSeparateExcitation"].notnull())]
+                        
+    plotsData.append( 
+        ResultsPlotData(
+            dataFrame, 'highbandImpulseNumber', ['PESQ', 'PEAQMOS'], 
+            {'PESQ' : 'PESQ (oddzielne wzbudzenie)', 'PEAQMOS' : 'PEAQ (oddzielne wzbudzenie)'}
+        ) 
+    )
+
+    plot = ResultsPlot(plotsData, 'G723.1L=16, plik ' + fileName, 
+                                    'figures/' + fileName + 'odGornegoPasmaWzb.svg', 'Liczba impulsów w górnym paśmie', 'Aproksymacja MOS')
+    plot.draw()
 
 
-dataFrame = results[  (results["filename"] == "parole16.WAV") 
-                    & (results["divider"] == "QMFDivider") 
-                    & (results["enhancer"] == "DummyEnhancer")
-                    & (results["lowbandCompressor"] == "G7231Compressor")
-                    & (results["highbandCompressor"] == "G7231Compressor")
-                    & (results["highbandImpulseNumber"] == 4)
-                    & (results["lowbandSeparateExcitation"].isnull())
-                    & (results["highbandSeparateExcitation"].isnull())]
+#################################################################################################################################################
+#wykres zależności MOS od liczby impulsów w kompresji dolnoprzepustowej z modyfikacją QMF i bez
 
-plotsData = [ ResultsPlotData(dataFrame, 'lowbandImpulseNumber', ['PESQ', 'PEAQMOS'], {'PESQ' : 'PESQ', 'PEAQMOS' : 'PEAQ'}) ]
+for fileName in fileNames:
+    dataFrame = results[  (results["filename"] == fileName) 
+                        & (results["divider"] == "QMFDivider") 
+                        & (results["enhancer"] == "DummyEnhancer")
+                        & (results["lowbandCompressor"] == "G7231Compressor")
+                        & (results["highbandCompressor"] == "G7231Compressor")
+                        & (results["highbandImpulseNumber"] == 4)
+                        & (results["lowbandSeparateExcitation"].isnull())
+                        & (results["highbandSeparateExcitation"].isnull())]
 
-dataFrame = results[  (results["filename"] == "parole16.WAV") 
-                    & (results["divider"] == "QMFDivider") 
-                    & (results["enhancer"] == "DummyEnhancer")
-                    & (results["lowbandCompressor"] == "G7231Compressor")
-                    & (results["highbandCompressor"] == "G7231Compressor")
-                    & (results["highbandImpulseNumber"] == 4)
-                    & (results["lowbandSeparateExcitation"].notnull())
-                    & (results["highbandSeparateExcitation"].notnull())]
-                    
-plotsData.append( ResultsPlotData(dataFrame, 'lowbandImpulseNumber', ['PESQ', 'PEAQMOS'], {'PESQ' : 'PESQ oddzielne wzbudzenie', 'PEAQMOS' : 'PEAQ oddzielne wzbudzenie'}) )
+    plotsData = [ 
+        ResultsPlotData
+            (dataFrame, 'lowbandImpulseNumber', ['PESQ', 'PEAQMOS'], 
+            {'PESQ' : 'PESQ (bez modyfikacji widma)', 'PEAQMOS' : 'PEAQ (bez modyfikacji widma)'}) 
+    ]
 
-plot = ResultsPlot(plotsData, 'Wykres zależności oceny jakości\nod liczby impulsów w dolnym paśmie', 'figures/parole16odDolnegoPasma.svg', 'Liczba impulsów', 'Aproksymacja MOS')
-plot.draw()
+    dataFrame = results[  (results["filename"] == fileName) 
+                        & (results["divider"] == "QMFWithHighbandModDivider") 
+                        & (results["enhancer"] == "DummyEnhancer")
+                        & (results["lowbandCompressor"] == "G7231Compressor")
+                        & (results["highbandCompressor"] == "G7231Compressor")
+                        & (results["highbandImpulseNumber"] == 4)
+                        & (results["lowbandSeparateExcitation"].isnull())
+                        & (results["highbandSeparateExcitation"].isnull())]
+                        
+    plotsData.append( 
+        ResultsPlotData(
+            dataFrame, 'lowbandImpulseNumber', ['PESQ', 'PEAQMOS'], 
+            {'PESQ' : 'PESQ (odwrócenie widma\ngórnego pasma)', 'PEAQMOS' : 'PEAQ (odwrócenie widma\ngórnago pasma)'}
+        ) 
+    )
 
-dataFrame = results[  (results["filename"] == "parole16.WAV") 
-                    & (results["divider"] == "QMFDivider") 
-                    & (results["enhancer"] == "DummyEnhancer")
-                    & (results["lowbandCompressor"] == "G7231Compressor")
-                    & (results["highbandCompressor"] == "G7231Compressor")
-                    & (results["lowbandImpulseNumber"] == 16)
-                    & (results["lowbandSeparateExcitation"].isnull())
-                    & (results["highbandSeparateExcitation"].isnull())]
+    plot = ResultsPlot(plotsData, 'G723.1H_imp=4, plik ' + fileName, 
+                                    'figures/' + fileName + 'odDolnegoPasmaQmfMod.svg', 'Liczba impulsów w dolnym paśmie', 'Aproksymacja MOS')
+    plot.draw()
 
-plotsData = [ ResultsPlotData(dataFrame, 'highbandImpulseNumber', ['PESQ', 'PEAQMOS'], {'PESQ' : 'PESQ', 'PEAQMOS' : 'PEAQ'}) ]
 
-dataFrame = results[  (results["filename"] == "parole16.WAV") 
-                    & (results["divider"] == "QMFDivider") 
-                    & (results["enhancer"] == "DummyEnhancer")
-                    & (results["lowbandCompressor"] == "G7231Compressor")
-                    & (results["highbandCompressor"] == "G7231Compressor")
-                    & (results["lowbandImpulseNumber"] == 16)
-                    & (results["lowbandSeparateExcitation"].notnull())
-                    & (results["highbandSeparateExcitation"].notnull())]
-                    
-plotsData.append( ResultsPlotData(dataFrame, 'highbandImpulseNumber', ['PESQ', 'PEAQMOS'], {'PESQ' : 'PESQ oddzielne wzbudzenie', 'PEAQMOS' : 'PEAQ oddzielne wzbudzenie'}) )
+#################################################################################################################################################
+#wykres zależności MOS od wzmocnienia górnego pasma
 
-plot = ResultsPlot(plotsData, 'Wykres zależności oceny jakości\nod liczby impulsów w górnym paśmie', 'figures/parole16odGornegoPasma.svg', 'Liczba impulsów', 'Aproksymacja MOS')
-plot.draw()
+for fileName in fileNames:
+    dataFrame = results[  (results["filename"] == fileName) 
+                        & (results["divider"] == "QMFDivider") 
+                        & (results["lowbandCompressor"] == "G7231Compressor")
+                        & (results["lowbandImpulseNumber"] == 16)
+                        & (results["highbandCompressor"] == "G7231Compressor")
+                        & (results["highbandImpulseNumber"] == 8)
+                        & (results["lowbandSeparateExcitation"].isnull())
+                        & (results["highbandSeparateExcitation"].isnull())]
+
+    plotsData = [ 
+        ResultsPlotData
+            (dataFrame, 'highbandEnhance', ['PESQ', 'PEAQMOS'], 
+            {'PESQ' : 'PESQ', 'PEAQMOS' : 'PEAQ'}) 
+    ]
+
+    plot = ResultsPlot(plotsData, 'G723.1H_imp=8, G723.1L_imp=16,\nwsp. wzbudzenie, plik ' + fileName, 
+                                    'figures/' + fileName + 'odWzmocnienia.svg', 'wzmocnienie górnego pasma', 'Aproksymacja MOS')
+    plot.draw()
+
+
 
 #print(firstPlot.head())
 

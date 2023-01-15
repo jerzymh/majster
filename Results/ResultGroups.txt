@@ -1,0 +1,1 @@
+DividingCompressor:\(divider:([A-Za-z]+)\)\(enhancer:([A-Za-z0-9\.]+)\)\(bandCompressors:\[([A-Za-z0-9]+), ([A-Za-z0-9]+)\]\)\{'PEAQCompressionQualityMeasurer': '([\-0-9\.]+)', 'PESQCompressionQualityMeasurer': '([\-0-9\.]+)'\}
