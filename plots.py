@@ -81,9 +81,9 @@ for fileName in fileNames:
         ) 
     )
 
-    plot = ResultsPlot(plotsData, 'Zależności aproksymacji MOS od liczby impulsów w dolnym paśmie\n' 
-                                    'G723.1H_Imp=4, plik ' + fileName, 
-                                    'figures/' + fileName + 'odDolnegoPasmaWzb.svg', 'Liczba impulsów', 'Aproksymacja MOS')
+    plot = ResultsPlot(plotsData, '',#'Zależności aproksymacji MOS od liczby impulsów w dolnym paśmie\n' 
+                                    #'G723.1H_Imp=4, plik ' + fileName, 
+                                    'figures/' + fileName + 'odDolnegoPasmaWzb.png', 'Liczba impulsów', 'Aproksymacja MOS')
     plot.draw()
 
 #################################################################################################################################################
@@ -122,8 +122,8 @@ for fileName in fileNames:
         ) 
     )
 
-    plot = ResultsPlot(plotsData, 'G723.1L=16, plik ' + fileName, 
-                                    'figures/' + fileName + 'odGornegoPasmaWzb.svg', 'Liczba impulsów w górnym paśmie', 'Aproksymacja MOS')
+    plot = ResultsPlot(plotsData, '', 
+                                    'figures/' + fileName + 'odGornegoPasmaWzb.png', 'Liczba impulsów w górnym paśmie', 'Aproksymacja MOS')
     plot.draw()
 
 
@@ -162,8 +162,8 @@ for fileName in fileNames:
         ) 
     )
 
-    plot = ResultsPlot(plotsData, 'G723.1H_imp=4, plik ' + fileName, 
-                                    'figures/' + fileName + 'odDolnegoPasmaQmfMod.svg', 'Liczba impulsów w dolnym paśmie', 'Aproksymacja MOS')
+    plot = ResultsPlot(plotsData, '', 
+                                    'figures/' + fileName + 'odDolnegoPasmaQmfMod.png', 'Liczba impulsów w dolnym paśmie', 'Aproksymacja MOS')
     plot.draw()
 
 
@@ -186,8 +186,8 @@ for fileName in fileNames:
             {'PESQ' : 'PESQ', 'PEAQMOS' : 'PEAQ'}) 
     ]
 
-    plot = ResultsPlot(plotsData, 'G723.1H_imp=8, G723.1L_imp=16,\nwsp. wzbudzenie, plik ' + fileName, 
-                                    'figures/' + fileName + 'odWzmocnienia.svg', 'wzmocnienie górnego pasma', 'Aproksymacja MOS')
+    plot = ResultsPlot(plotsData, '',#'G723.1H_imp=8, G723.1L_imp=16,\nwsp. wzbudzenie, plik ' + fileName, 
+                                    'figures/' + fileName + 'odWzmocnienia.png', 'wzmocnienie górnego pasma', 'Aproksymacja MOS')
     plot.draw()
 
 

@@ -24,10 +24,10 @@ class G7231Compressor(CompressorBase):
         #signal = matlab.double(signal)
         #self.engine.wavwrite(signal, self.samplongFreq, self.inputFileName, nargout=0)
         if self.isUsingSeparateExcitation:
-            self.engine.G7231Coder_imp(signalFileName, self.outputFileName, self.impulseNumber, nargout=0)
+            self.engine.G7231Coder_mp(signalFileName, self.outputFileName, self.impulseNumber, nargout=0)
 
         elif self.isUsingCustomImpulseNumber:
-            self.engine.G7231Coder_mp(signalFileName, self.outputFileName, self.impulseNumber, nargout=0)
+            self.engine.G7231Coder_imp(signalFileName, self.outputFileName, self.impulseNumber, nargout=0)
 
         else:
             self.engine.G7231Coder_basic(signalFileName, self.outputFileName, nargout=0)
